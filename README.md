@@ -9,7 +9,7 @@ Run: <br> <code>python multiconn-server.py 127.0.0.1 65432</code><br>
 You could replace the arguments: 127.0.0.1 and 65432 with any ip and port where you want your server to run on
 On the second instance launch the client's script and issue arguments: <i>host</i>, <i>port</i> and <i>number of connections</i>.
 <i>host</i>, <i>port</i> are the ip and ready-port of the server. <br>
-<code>python multiconn-client.py 127.0.0.1 65432 5</code><br>
+<code>python multiconn-client.py 127.0.0.1 65432 2</code><br>
 <strong>Now! Watch the magic</strong>
 # Disclaimer
 For security purposes experiment with your Network's loopback interface(localhost). <br>

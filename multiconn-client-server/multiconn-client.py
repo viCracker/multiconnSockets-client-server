@@ -39,7 +39,7 @@ def service_connection(key, mask):
         if not data.outb and data.messages:
             data.outb = data.messages.pop(0)
         if data.outb:
-            print(f"Sending {data.outb!r} to {data.addr}")
+            print(f"Sending {data.outb!r} to {sock.getpeername()!r}")
             sent = sock.send(data.outb)
             data.outb = data.outb[sent:]
 
@@ -48,10 +48,19 @@ sel = selectors.DefaultSelector()
 host, port, number_of_Connections = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 messages = [b"Message 1 from client.", b"Message 2 from client."]
 
-connsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+start_connection(host, port, number_of_Connections)
 
+try:
+    while True:
+        events = sel.select(timeout=None)
+        for key, mask in events:
+            if key.data is None:
+                continue
+            else:
+                service_connection(key, mask)
+except KeyboardInterrupt:
+    print("Keyboard Interrupt innit")
 
-if start_connection(host, port, number_of_Connections):
-    for i in range(0, number_of_Connections):
-        for msg in messages:
-            print(f"Sending {msg}")
+finally:
+    sel.close()
+#sensational!
